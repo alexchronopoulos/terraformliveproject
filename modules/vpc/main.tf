@@ -18,7 +18,7 @@ module "vpc" {
 module "bastion_sg" {
     source = "terraform-aws-modules/security-group/aws//modules/ssh"
 
-    name = "bastion"
+    name = "bastion_sg"
     description = "Security group for bastion hosts with SSH open from specific IP"
     vpc_id = module.vpc.vpc_id
 
@@ -44,4 +44,22 @@ resource "aws_security_group" "app_sg" {
         protocol = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
+    ingress {
+        description = "5000 from lb_sg"
+        from_port = 5000
+        to_port = 5000
+        protocol = "tcp"
+        security_groups = ["${module.lb_sg.this_security_group_id}"]
+    }
+}
+
+module "lb_sg" {
+    source = "terraform-aws-modules/security-group/aws//modules/http-80"
+
+    name = "lb_sg"
+    description = "Security group for load balancers hosts with HTTP open to Internet"
+    vpc_id = module.vpc.vpc_id
+
+    ingress_cidr_blocks = ["0.0.0.0/0"]
 }
