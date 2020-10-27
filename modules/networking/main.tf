@@ -115,7 +115,10 @@ module "alb" {
         { 
             port = 80
             protocol = "HTTP"
+        },
+        {
+            port = 5000
+            protocol = "HTTP"
         }
     ]
-
 }
