@@ -1,3 +1,4 @@
+# grab the latest amazon linux 2 ami for bastion hosts
 data "aws_ami" "amazonlinux" {
     most_recent = true
     filter {
@@ -7,6 +8,7 @@ data "aws_ami" "amazonlinux" {
     owners = ["137112412989"]
 }
 
+# launch template for bastion hosts
 resource "aws_launch_template" "bastion" {
     name_prefix = var.namespace
     image_id = data.aws_ami.amazonlinux.id
@@ -15,6 +17,7 @@ resource "aws_launch_template" "bastion" {
     vpc_security_group_ids = [var.sg.bastion]
 }
 
+# auto scaling group for bastion hosts
 resource "aws_autoscaling_group" "bastion" {
     name = "${var.namespace}-bastion-asg"
     min_size = 0
@@ -94,10 +97,12 @@ JSON
 
 }
 
+# ecs cluster
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${var.namespace}-cluster"
 }
 
+# ecs service
 resource "aws_ecs_service" "ecs_service" {
   name            = "flask"
   cluster         = aws_ecs_cluster.ecs_cluster.id
