@@ -116,6 +116,8 @@ resource "aws_codedeploy_app" "codedeploy_app" {
   name             = var.task
 }
 
+## CODEPIPELINE
+
 # IAM role for Codepipline
 resource "aws_iam_role" "codepipeline_role" {
   name = "${var.namespace}-codepipeline_role"
