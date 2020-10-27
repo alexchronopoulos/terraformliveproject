@@ -13,3 +13,7 @@ variable "sg" {
 variable "ssh_keypair" {
     type = string
 }
+
+variable "bastion_hosts" {
+    type = number
+}

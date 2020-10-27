@@ -18,6 +18,7 @@ resource "aws_launch_template" "bastion" {
 resource "aws_autoscaling_group" "bastion" {
     name = "${var.namespace}-bastion-asg"
     min_size = 1
+    desired_capacity = var.bastion_hosts
     max_size = 3
     vpc_zone_identifier = var.vpc.public_subnets
     launch_template {

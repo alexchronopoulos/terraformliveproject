@@ -15,3 +15,21 @@ variable "ssh_keypair" {
     default = "koffeeluv"
     type = string
 }
+
+variable "bastion_hosts" {
+    description = "Number of bastion hosts to create"
+    default = 0
+    type = number
+}
+
+variable "task" {
+    description = "name of the application being run"
+    default = "flask"
+    type = string
+}
+
+variable "branch" {
+    description = "branch where codepipeline will look for changes"
+    default = "master"
+    type = string
+}

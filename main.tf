@@ -15,17 +15,21 @@ module "ec2" {
     vpc = module.vpc.vpc
     sg = module.vpc.sg
     ssh_keypair = var.ssh_keypair
+    bastion_hosts = var.bastion_hosts
 }
 
 module "ecs" {
     source = "./modules/ecs"
     namespace = var.namespace
     alb = module.ec2.alb
-    iam_role_arns = module.iam.iam_role_arns
     sg = module.vpc.sg
     vpc = module.vpc.vpc
+    task = var.task
 }
 
-module "iam" {
-    source = "./modules/iam"
+module "codepipeline" {
+    source = "./modules/codepipeline"
+    namespace = var.namespace
+    branch = var.branch
+    task = var.task
 }
