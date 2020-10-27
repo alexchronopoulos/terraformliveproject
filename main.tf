@@ -25,4 +25,6 @@ module "codepipeline" {
     namespace = var.namespace
     branch = var.branch
     task = var.task
+    ecs_cluster = module.compute.ecs_cluster
+    ecs_service = module.compute.ecs_service
 }
