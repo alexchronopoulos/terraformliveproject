@@ -3,8 +3,8 @@ provider "aws" {
     region = var.region
 }
 
-module "vpc" {
-    source = "./modules/vpc"
+module "networking" {
+    source = "./modules/networking"
     namespace = var.namespace
     ssh_public_ip = var.ssh_public_ip
 }
@@ -12,8 +12,8 @@ module "vpc" {
 module "ec2" {
     source = "./modules/ec2"
     namespace = var.namespace
-    vpc = module.vpc.vpc
-    sg = module.vpc.sg
+    networking = module.networking.networking
+    sg = module.networking.sg
     ssh_keypair = var.ssh_keypair
     bastion_hosts = var.bastion_hosts
 }
@@ -21,9 +21,9 @@ module "ec2" {
 module "ecs" {
     source = "./modules/ecs"
     namespace = var.namespace
-    alb = module.vpc.alb
-    sg = module.vpc.sg
-    vpc = module.vpc.vpc
+    alb = module.networking.alb
+    sg = module.networking.sg
+    networking = module.networking.networking
     task = var.task
 }
 
