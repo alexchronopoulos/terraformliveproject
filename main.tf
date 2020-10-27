@@ -21,7 +21,7 @@ module "ec2" {
 module "ecs" {
     source = "./modules/ecs"
     namespace = var.namespace
-    alb = module.ec2.alb
+    alb = module.vpc.alb
     sg = module.vpc.sg
     vpc = module.vpc.vpc
     task = var.task
