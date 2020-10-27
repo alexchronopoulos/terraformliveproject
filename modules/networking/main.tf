@@ -50,18 +50,30 @@ resource "aws_security_group" "app_sg" {
         from_port = 5000
         to_port = 5000
         protocol = "tcp"
-        security_groups = ["${module.lb_sg.this_security_group_id}"]
+        security_groups = ["${aws_security_group.lb_sg.id}"]
     }
 }
 
-module "lb_sg" {
-    source = "terraform-aws-modules/security-group/aws//modules/http-80"
-
+resource "aws_security_group" "lb_sg" {
     name = "lb_sg"
-    description = "Security group for load balancers hosts with HTTP open to Internet"
+    description = "Allow HTTP from Internet"
     vpc_id = module.vpc.vpc_id
 
-    ingress_cidr_blocks = ["0.0.0.0/0"]
+    ingress {
+        description = "HTTP from Internet"
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        description = "5000 from external IP"
+        from_port = 5000
+        to_port = 5000
+        protocol = "tcp"
+        security_groups = ["${var.ssh_public_ip}/32"]
+    }
 }
 
 module "alb" {
@@ -73,7 +85,7 @@ module "alb" {
     load_balancer_type = "application"
     vpc_id = module.vpc.vpc_id
     subnets = module.vpc.public_subnets
-    security_groups = [module.lb_sg.this_security_group_id]
+    security_groups = [aws_security_group.lb_sg.id]
     
     target_groups = [
         { 
