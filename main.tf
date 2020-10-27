@@ -27,4 +27,5 @@ module "codepipeline" {
     task = var.task
     ecs_cluster = module.compute.ecs_cluster
     ecs_service = module.compute.ecs_service
+    alb = module.networking.alb
 }
