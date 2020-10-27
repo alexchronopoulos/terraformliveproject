@@ -9,21 +9,14 @@ module "networking" {
     ssh_public_ip = var.ssh_public_ip
 }
 
-module "ec2" {
-    source = "./modules/ec2"
+module "compute" {
+    source = "./modules/compute"
     namespace = var.namespace
-    networking = module.networking.networking
+    vpc = module.networking.networking
     sg = module.networking.sg
     ssh_keypair = var.ssh_keypair
     bastion_hosts = var.bastion_hosts
-}
-
-module "ecs" {
-    source = "./modules/ecs"
-    namespace = var.namespace
     alb = module.networking.alb
-    sg = module.networking.sg
-    networking = module.networking.networking
     task = var.task
 }
 
