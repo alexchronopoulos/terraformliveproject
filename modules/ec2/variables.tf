@@ -17,3 +17,11 @@ variable "ssh_keypair" {
 variable "bastion_hosts" {
     type = number
 }
+
+variable "alb" {
+    type = any
+}
+
+variable "task" {
+    type = string
+}
