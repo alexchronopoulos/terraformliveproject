@@ -1,8 +1,12 @@
+## CODECOMMIT
+
 # Codecommit repo for source files
 # HTTPS push URL will be included in output
 resource "aws_codecommit_repository" "repo" {
   repository_name = "${var.namespace}-repo"
 }
+
+## CODEBUILD
 
 # S3 bucket for artifact storage and build cache
 resource "aws_s3_bucket" "codepipeline_bucket" {
@@ -102,6 +106,14 @@ resource "aws_codebuild_project" "codebuild_project" {
   }
 
   source_version = "master"
+}
+
+## CODEDEPLOY
+
+# CodeDeploy App
+resource "aws_codedeploy_app" "codedeploy_app" {
+  compute_platform = "ECS"
+  name             = var.task
 }
 
 # IAM role for Codepipline
