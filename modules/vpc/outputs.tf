@@ -9,3 +9,7 @@ output "sg" {
         lb = module.lb_sg.this_security_group_id
     }
 }
+
+output "alb" {
+    value = module.alb
+}
