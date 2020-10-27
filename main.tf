@@ -12,7 +12,7 @@ module "networking" {
 module "compute" {
     source = "./modules/compute"
     namespace = var.namespace
-    vpc = module.networking.networking
+    vpc = module.networking.vpc
     sg = module.networking.sg
     ssh_keypair = var.ssh_keypair
     bastion_hosts = var.bastion_hosts
