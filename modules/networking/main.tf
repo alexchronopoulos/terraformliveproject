@@ -77,7 +77,24 @@ module "alb" {
     
     target_groups = [
         { 
-            name = "app"
+            name = "app-blue"
+            backend_protocol = "HTTP"
+            backend_port = 5000
+            target_type = "ip"
+            health_check = {
+                enabled             = true
+                interval            = 30
+                path                = "/"
+                port                = "traffic-port"
+                healthy_threshold   = 3
+                unhealthy_threshold = 3
+                timeout             = 6
+                protocol            = "HTTP"
+                matcher             = "200-399"
+            } 
+        },
+        { 
+            name = "app-green"
             backend_protocol = "HTTP"
             backend_port = 5000
             target_type = "ip"
