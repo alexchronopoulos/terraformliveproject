@@ -138,6 +138,17 @@ resource "aws_iam_role" "codedeploy_role" {
 EOF
 }
 
+# Standard AWS CodeDeploy ECS policy
+data "aws_iam_policy" "codedeploy_ecs_role_policy" {
+  arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+}
+
+# Attach policy to role
+resource "aws_iam_role_policy_attachment" "codedeploy_iam_role_attachment" {
+  role       = aws_iam_role.codedeploy_role.name
+  policy_arn = data.aws_iam_policy.codedeploy_ecs_role_policy.arn
+}
+
 # CodeDeploy Blue/Green Deployment Group
 resource "aws_codedeploy_deployment_group" "deployment_group" {
   app_name               = aws_codedeploy_app.codedeploy_app.name
@@ -260,17 +271,6 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
   ]
 }
 EOF
-}
-
-# Standard AWS CodeDeploy ECS policy
-data "aws_iam_policy" "codedeploy_ecs_role_policy" {
-  arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
-}
-
-# Attach policy to role
-resource "aws_iam_role_policy_attachment" "codedeploy_iam_role_attachment" {
-  role       = aws_iam_role.codepipeline_role.name
-  policy_arn = data.aws_iam_policy.codedeploy_ecs_role_policy.arn
 }
 
 # Codepipeline
