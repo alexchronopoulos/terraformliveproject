@@ -73,7 +73,7 @@ data "aws_iam_policy" "ecr_role_policy" {
 }
 
 # Attach policy to role
-resource "aws_iam_role_policy_attachment" "iam_role_attachment" {
+resource "aws_iam_role_policy_attachment" "codebuild_iam_role_attachment" {
   role       = aws_iam_role.codebuild_role.name
   policy_arn = data.aws_iam_policy.ecr_role_policy.arn
 }
@@ -143,7 +143,7 @@ data "aws_iam_policy" "codedeploy_ecs_role_policy" {
 }
 
 # Attach policy to role
-resource "aws_iam_role_policy_attachment" "iam_role_attachment" {
+resource "aws_iam_role_policy_attachment" "codedeploy_iam_role_attachment" {
   role       = aws_iam_role.codedeploy_role.name
   policy_arn = data.aws_iam_policy.codedeploy_ecs_role_policy.arn
 }
