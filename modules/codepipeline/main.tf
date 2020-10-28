@@ -137,6 +137,28 @@ resource "aws_iam_role" "codedeploy_role" {
 EOF
 }
 
+# Policies required for CodeDeploy to deploy project
+resource "aws_iam_role_policy" "codedeploy" {
+  role = aws_iam_role.codedeploy_role.name
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:DescribeServices"
+      ],
+      "Resource": [
+        "${var.ecs_service.arn}"
+      ]
+    }
+  ]
+}
+POLICY
+}
+
 # CodeDeploy Blue/Green Deployment Group
 resource "aws_codedeploy_deployment_group" "deployment_group" {
   app_name               = aws_codedeploy_app.codedeploy_app.name
@@ -167,14 +189,18 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
 
   ecs_service {
     cluster_name = var.ecs_cluster
-    service_name = var.ecs_service
+    service_name = var.ecs_service.name
   }
 
   load_balancer_info {
     target_group_pair_info {
       prod_traffic_route {
         listener_arns = [
-          var.alb.http_tcp_listener_arns[0],
+          var.alb.http_tcp_listener_arns[0]
+        ]
+      }
+      test_traffic_route {
+        listener_arns = [
           var.alb.http_tcp_listener_arns[1]
         ]
       }
