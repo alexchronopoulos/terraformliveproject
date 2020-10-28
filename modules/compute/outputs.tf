@@ -10,5 +10,8 @@ output "ecs_cluster" {
 }
 
 output "ecs_service" {
-    value = aws_ecs_service.ecs_service.name
+    value = {
+        name = aws_ecs_service.ecs_service.name
+        arn = aws_ecs_service.ecs_service.id
+    }
 }
