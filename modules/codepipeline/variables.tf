@@ -15,7 +15,7 @@ variable "ecs_cluster" {
 }
 
 variable "ecs_service" {
-    type = string
+    type = any
 }
 
 variable "alb" {
