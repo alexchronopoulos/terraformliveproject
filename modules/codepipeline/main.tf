@@ -78,6 +78,7 @@ resource "aws_iam_role_policy_attachment" "codebuild_iam_role_attachment" {
   policy_arn = data.aws_iam_policy.ecr_role_policy.arn
 }
 
+# CodeBuild project
 resource "aws_codebuild_project" "codebuild_project" {
   name          = "${var.task}-project"
   description   = "${var.task}_codebuild_project"
