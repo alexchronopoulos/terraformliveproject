@@ -256,7 +256,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "codebuild:BatchGetBuilds",
         "codebuild:StartBuild"
       ],
-      "Resource": ${aws_codebuild_project.codebuild_project.arn}
+      "Resource": "${aws_codebuild_project.codebuild_project.arn}"
     },
     {
         "Effect" : "Allow",
@@ -267,6 +267,20 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "Resource" : [
             "${aws_codecommit_repository.repo.arn}"
         ]
+    },
+    {
+      "Action": [
+          "codedeploy:CreateDeployment",
+          "codedeploy:GetDeployment",
+          "codedeploy:GetApplication",
+          "codedeploy:GetApplicationRevision",
+          "codedeploy:RegisterApplicationRevision",
+          "codedeploy:GetDeploymentConfig",
+          "ecs:RegisterTaskDefinition",
+          "iam:PassRole"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
     }
   ]
 }
