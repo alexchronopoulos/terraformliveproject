@@ -137,26 +137,15 @@ resource "aws_iam_role" "codedeploy_role" {
 EOF
 }
 
-# Policies required for CodeDeploy to deploy project
-resource "aws_iam_role_policy" "codedeploy" {
-  role = aws_iam_role.codedeploy_role.name
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecs:DescribeServices"
-      ],
-      "Resource": [
-        "${var.ecs_service.arn}"
-      ]
-    }
-  ]
+# Standard AWS CodeDeploy ECS policy
+data "aws_iam_policy" "codedeploy_ecs_role_policy" {
+  arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
 }
-POLICY
+
+# Attach policy to role
+resource "aws_iam_role_policy_attachment" "iam_role_attachment" {
+  role       = aws_iam_role.codedeploy_role.name
+  policy_arn = data.aws_iam_policy.codedeploy_ecs_role_policy.arn
 }
 
 # CodeDeploy Blue/Green Deployment Group
