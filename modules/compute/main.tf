@@ -128,6 +128,10 @@ resource "aws_ecs_service" "ecs_service" {
     container_name   = var.task
     container_port   = 5000
   }
+
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
 }
 
 
