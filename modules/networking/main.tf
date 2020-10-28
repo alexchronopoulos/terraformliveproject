@@ -72,7 +72,7 @@ resource "aws_security_group" "lb_sg" {
         from_port = 5000
         to_port = 5000
         protocol = "tcp"
-        security_groups = ["${var.ssh_public_ip}/32"]
+        cidr_blocks = ["${var.ssh_public_ip}"]
     }
 }
 
