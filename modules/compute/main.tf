@@ -97,6 +97,38 @@ JSON
 
 }
 
+resource "local_file" "taskdefinition" {
+  filename = "./files/taskdefinition.json"
+  content = <<JSON
+{
+  "executionRoleArn": "${aws_iam_role.task_execution_role.arn}",
+  "containerDefinitions":  
+    [
+        {
+            "name": "${var.task}",
+            "image": "${aws_ecr_repository.ecr_repo.repository_url}",
+            "cpu": 256,
+            "memory": 512,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 5000
+                }
+            ]
+        }
+    ],
+    "requiredCompatabilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "256",
+    "memory": "512",
+    "family": "${var.task}"
+}
+JSON
+}
+
 # ecs cluster
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${var.namespace}-cluster"
