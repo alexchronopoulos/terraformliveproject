@@ -33,3 +33,9 @@ variable "branch" {
     default = "master"
     type = string
 }
+
+variable "port" {
+    description = "port the container application runs on"
+    default = 5000
+    type = number
+}
