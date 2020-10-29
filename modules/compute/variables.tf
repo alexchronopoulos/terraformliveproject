@@ -25,3 +25,7 @@ variable "alb" {
 variable "task" {
     type = string
 }
+
+variable "port" {
+    type = number
+}

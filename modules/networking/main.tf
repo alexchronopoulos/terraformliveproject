@@ -46,9 +46,9 @@ resource "aws_security_group" "app_sg" {
     }
 
     ingress {
-        description = "5000 from lb_sg"
-        from_port = 5000
-        to_port = 5000
+        description = "app port from lb_sg"
+        from_port = var.port
+        to_port = var.port
         protocol = "tcp"
         security_groups = ["${aws_security_group.lb_sg.id}"]
     }
@@ -68,9 +68,9 @@ resource "aws_security_group" "lb_sg" {
     }
 
     ingress {
-        description = "5000 from external IP"
-        from_port = 5000
-        to_port = 5000
+        description = "app port from external IP"
+        from_port = var.port
+        to_port = var.port
         protocol = "tcp"
         cidr_blocks = ["${var.ssh_public_ip}"]
     }
@@ -91,7 +91,7 @@ module "alb" {
         { 
             name = "app-blue"
             backend_protocol = "HTTP"
-            backend_port = 5000
+            backend_port = var.port
             target_type = "ip"
             health_check = {
                 enabled             = true
@@ -108,7 +108,7 @@ module "alb" {
         { 
             name = "app-green"
             backend_protocol = "HTTP"
-            backend_port = 5000
+            backend_port = var.port
             target_type = "ip"
             health_check = {
                 enabled             = true
@@ -129,7 +129,7 @@ module "alb" {
             protocol = "HTTP"
         },
         {
-            port = 5000
+            port = var.port
             protocol = "HTTP"
         }
     ]

@@ -7,6 +7,7 @@ module "networking" {
     source = "./modules/networking"
     namespace = var.namespace
     ssh_public_ip = var.ssh_public_ip
+    port = var.port
 }
 
 module "compute" {
@@ -18,6 +19,7 @@ module "compute" {
     bastion_hosts = var.bastion_hosts
     alb = module.networking.alb
     task = var.task
+    port = var.port
 }
 
 module "codepipeline" {

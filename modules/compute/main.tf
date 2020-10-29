@@ -82,8 +82,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         "essential": true,
         "portMappings": [
             {
-                "containerPort": 5000,
-                "hostPort": 5000
+                "containerPort": ${var.port},
+                "hostPort": ${var.port}
             }
         ]
     }
@@ -112,8 +112,8 @@ resource "local_file" "taskdef" {
             "essential": true,
             "portMappings": [
                 {
-                    "containerPort": 5000,
-                    "hostPort": 5000
+                    "containerPort": ${var.port},
+                    "hostPort": ${var.port}
                 }
             ]
         }
@@ -158,7 +158,7 @@ resource "aws_ecs_service" "ecs_service" {
   load_balancer {
     target_group_arn = var.alb.target_group_arns[0]
     container_name   = var.task
-    container_port   = 5000
+    container_port   = var.port
   }
 
   deployment_controller {
@@ -177,7 +177,7 @@ Resources:
         TaskDefinition: "${aws_ecs_task_definition.ecs_task_definition.arn}"
         LoadBalancerInfo:
           ContainerName: "${var.task}"
-          ContainerPort: 5000
+          ContainerPort: ${var.port}
 YAML
 }
 

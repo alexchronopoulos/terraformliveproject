@@ -5,3 +5,7 @@ variable "namespace" {
 variable "ssh_public_ip" {
     type = string
 }
+
+variable "port" {
+    type = number
+}
