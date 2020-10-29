@@ -347,8 +347,8 @@ resource "aws_codepipeline" "codepipeline" {
       configuration = {
         ApplicationName = aws_codedeploy_app.codedeploy_app.name
         DeploymentGroupName = aws_codedeploy_deployment_group.deployment_group.app_name
-        TaskDefinitionTemplateArtifact = "SourceOutput"
-        AppSpecTemplateArtifact = "SourceOutput"
+        TaskDefinitionTemplateArtifact = "source_output"
+        AppSpecTemplateArtifact = "source_output"
       }
     }
   }
