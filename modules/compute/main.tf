@@ -97,8 +97,8 @@ JSON
 
 }
 
-resource "local_file" "taskdefinition" {
-  filename = "./files/taskdefinition.json"
+resource "local_file" "taskdef" {
+  filename = "./files/taskdef.json"
   content = <<JSON
 {
   "executionRoleArn": "${aws_iam_role.task_execution_role.arn}",
