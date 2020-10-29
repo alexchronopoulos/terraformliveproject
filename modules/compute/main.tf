@@ -166,4 +166,18 @@ resource "aws_ecs_service" "ecs_service" {
   }
 }
 
+resource "local_file" "appspec" {
+  filename = "./files/appspec.yml"
+  content = <<YAML
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "${aws_ecs_task_definition.ecs_task_definition.arn}"
+        LoadBalancerInfo:
+          ContainerName: "${var.task}"
+          ContainerPort: 5000
+YAML
+}
 
