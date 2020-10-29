@@ -98,7 +98,7 @@ JSON
 }
 
 resource "local_file" "taskdef" {
-  filename = "./files/taskdef.json"
+  filename = "../app/taskdef.json"
   content = <<JSON
 {
   "executionRoleArn": "${aws_iam_role.task_execution_role.arn}",
@@ -167,7 +167,7 @@ resource "aws_ecs_service" "ecs_service" {
 }
 
 resource "local_file" "appspec" {
-  filename = "./files/appspec.yml"
+  filename = "../app/appspec.yml"
   content = <<YAML
 version: 0.0
 Resources:
