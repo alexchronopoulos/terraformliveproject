@@ -341,14 +341,14 @@ resource "aws_codepipeline" "codepipeline" {
       category        = "Deploy"
       owner           = "AWS"
       provider        = "CodeDeployToECS"
-      input_artifacts = ["source_output"]
+      input_artifacts = ["build_output"]
       version         = "1"
 
       configuration = {
         ApplicationName = aws_codedeploy_app.codedeploy_app.name
         DeploymentGroupName = aws_codedeploy_deployment_group.deployment_group.app_name
-        TaskDefinitionTemplateArtifact = "source_output"
-        AppSpecTemplateArtifact = "source_output"
+        TaskDefinitionTemplateArtifact = "build_output"
+        AppSpecTemplateArtifact = "build_output"
       }
     }
   }
