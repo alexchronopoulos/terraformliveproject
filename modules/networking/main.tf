@@ -74,6 +74,13 @@ resource "aws_security_group" "lb_sg" {
         protocol = "tcp"
         cidr_blocks = ["${var.ssh_public_ip}"]
     }
+
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 }
 
 module "alb" {
