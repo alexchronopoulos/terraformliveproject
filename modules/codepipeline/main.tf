@@ -106,11 +106,6 @@ resource "aws_codebuild_project" "codebuild_project" {
     type            = "CODEPIPELINE"
   }
 
-  cache {
-    type     = "S3"
-    location = aws_s3_bucket.codepipeline_bucket.bucket
-  }
-
   source_version = "master"
 }
 
