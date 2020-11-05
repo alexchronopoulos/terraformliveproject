@@ -39,3 +39,9 @@ variable "port" {
     default = 5000
     type = number
 }
+
+variable "destRegion" {
+    description = "Destination region for cross-region replication of database backup"
+    default = "us-west-2"
+    type = string
+}
