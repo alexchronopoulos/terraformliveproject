@@ -31,3 +31,8 @@ module "codepipeline" {
     ecs_service = module.compute.ecs_service
     alb = module.networking.alb
 }
+
+module "database" {
+    source = "./modules/database"
+    namespace = var.namespace
+}
