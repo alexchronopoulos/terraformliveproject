@@ -35,5 +35,8 @@ module "codepipeline" {
 module "database" {
     source = "./modules/database"
     namespace = var.namespace
+    region = var.region
     destRegion = var.destRegion
+    sourceFileName = var.sourceFileName
+    backupFileName = var.backupFileName
 }

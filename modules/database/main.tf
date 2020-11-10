@@ -210,8 +210,8 @@ resource "aws_iam_role_policy_attachment" "lambda" {
 
 data "archive_file" "streaming_lambda_zip" {
     type          = "zip"
-    source_file   = "./resources/lambda/streaming.py"
-    output_path   = "./resources/lambda/streaming_lambda_function.zip"
+    source_file   = "./modules/database/resources/lambda/streaming.py"
+    output_path   = "./modules/database/resources/lambda/streaming_lambda_function.zip"
 }
 
 resource "aws_lambda_function" "streaming_lambda" {

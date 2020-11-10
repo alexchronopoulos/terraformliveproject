@@ -45,3 +45,15 @@ variable "destRegion" {
     default = "us-west-2"
     type = string
 }
+
+variable "sourceFileName" {
+    description = "Filename of .csv file to populate DynamoDB table with"
+    default = "./modules/database/resources/koffeeluv_drunk_menu.csv"
+    type = string
+}
+
+variable "backupFileName" {
+    description = "Filename of .csv file to backup DynamoDB table with"
+    default = "backup.csv"
+    type = string
+}
