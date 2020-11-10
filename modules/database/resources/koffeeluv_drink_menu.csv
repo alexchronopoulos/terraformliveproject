@@ -1,0 +1,10 @@
+Category,Beverage,Size,Price
+drinks,batch brew,s,1.00
+drinks,batch brew,m,1.25
+drinks,batch brew,l,1.50
+drinks,latte,s,2.25
+drinks,latte,m,3.00
+drinks,latte,l,3.50
+drinks,p.s.l,s,3.25
+drinks,p.s.l.,m,3.75
+drinks,p.s.l.,l,4.25
